@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  skm-server:
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - demo-network
+    depends_on:
+      - demodb
+
+  demodb:
+    image: mysql
+    restart: always
+    networks:
+      - demo-network
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '3310:3306'
+    expose:
+      - '3310'
+    volumes:
+      - demodbv:/var/lib/mysql
+
+networks:
+  demo-network:
+volumes:
+  demodbv:
